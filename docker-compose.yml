@@ -6,7 +6,7 @@ services:
     image: wordpress
     restart: always
     ports:
-      - 4035:80
+      - 9999:80
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: wordpress
@@ -25,13 +25,15 @@ services:
       MYSQL_RANDOM_ROOT_PASSWORD: '1'
     volumes:
       - db:/var/lib/mysql
-  adminer:
-    depends_on:
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    links:
       - db
-    image: adminer
-    restart: always
     ports:
-      - 8888:8080
+      - 8888:80
+    environment:
+      - PMA_ARBITRARY=1
 
 networks:
   back:
